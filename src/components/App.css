@@ -1,3 +1,72 @@
-html {
-    background: #f8f8f8;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    min-width: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.calculator {
+    height: 700px;
+    width: 450px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.display {
+    box-sizing: border-box;
+    flex: 1 0 25%;
+    border-radius: 30px 30px 0 0;
+    background-color: #323232;
+    box-shadow: inset 4px 4px 7px #ffffff77, inset -4px 0px 7px #00000077,
+    10px 15px 30px #00000077;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 30px;
+}
+
+.display > p {
+    color: #F2F2F2;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 64px;
+    margin: 0;
+}
+
+.btn-pad {
+    flex: 1 0 75%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-radius: 0 0 30px 30px;
+    background-color: #FFD000;
+    box-shadow: inset 4px 0px 7px #ffffffcc, inset -4px -4px 7px #00000077,
+    10px 15px 30px #00000077;
+    padding: 10px 20px;
+}
+
+button {
+    width: 55px;
+    height: 55px;
+    background-color: #f2f2f2;
+    border-radius: 50%;
+    border: none;
+    box-shadow: inset 1px 1px 2px #ffffff77, inset -1px -1px 2px #00000077;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    margin: auto;
 }
