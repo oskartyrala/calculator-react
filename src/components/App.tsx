@@ -5,8 +5,8 @@ import { ButtonPad } from "./ButtonPad";
 function App() {
     return (
         <div className="calculator">
-        <Display />
-        <ButtonPad />
+            <Display />
+            <ButtonPad />
         </div>
     );
 }
