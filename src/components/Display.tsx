@@ -1,7 +1,16 @@
-export function Display(): JSX.Element {
+interface DisplayProps {
+    mainDisplay: string;
+    secondaryDisplay: string[];
+}
+
+export function Display({
+    mainDisplay,
+    secondaryDisplay,
+}: DisplayProps): JSX.Element {
     return (
         <div className="display">
-            <p>0</p>
+            <p className="secondaryDisplay">{secondaryDisplay}</p>
+            <p className="mainDisplay">{mainDisplay}</p>
         </div>
     );
 }

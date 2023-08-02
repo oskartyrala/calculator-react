@@ -36,16 +36,24 @@ button:hover {
     box-shadow: inset 4px 4px 7px #ffffff77, inset -4px 0px 7px #00000077,
         10px 15px 30px #00000077;
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
     padding: 30px;
 }
 
 .display > p {
     color: #f2f2f2;
     font-family: "Share Tech Mono", monospace;
-    font-size: 64px;
     margin: 0;
+}
+
+.mainDisplay {
+    font-size: 64px;
+}
+
+.secondaryDisplay {
+    font-size: 24px;
 }
 
 .btn-pad {
@@ -70,4 +78,91 @@ button {
     font-weight: 400;
     font-size: 20px;
     margin: auto;
+}
+
+#btn-1 {
+    grid-column: 1;
+    grid-row: 3;
+}
+
+#btn-2 {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+#btn-3 {
+    grid-column: 3;
+    grid-row: 3;
+}
+
+#btn-4 {
+    grid-column: 1;
+    grid-row: 4;
+}
+
+#btn-5 {
+    grid-column: 2;
+    grid-row: 4;
+}
+
+#btn-6 {
+    grid-column: 3;
+    grid-row: 4;
+}
+
+#btn-7 {
+    grid-column: 1;
+    grid-row: 5;
+}
+
+#btn-8 {
+    grid-column: 2;
+    grid-row: 5;
+}
+
+#btn-9 {
+    grid-column: 3;
+    grid-row: 5;
+}
+
+#btn-0 {
+    grid-column: 2;
+    grid-row: 6;
+}
+
+#btn-equals {
+    grid-column: 4;
+    grid-row: 6;
+    background-color: #202024;
+    color: white;
+}
+
+#btn-plus {
+    grid-column: 4;
+    grid-row: 5;
+}
+
+#btn-minus {
+    grid-column: 4;
+    grid-row: 4;
+}
+
+#btn-multiply {
+    grid-column: 4;
+    grid-row: 3;
+}
+
+#btn-divide {
+    grid-column: 4;
+    grid-row: 2;
+}
+
+#btn-plusminus {
+    grid-column: 1;
+    grid-row: 6;
+}
+
+#btn-dot {
+    grid-column: 3;
+    grid-row: 6;
 }
