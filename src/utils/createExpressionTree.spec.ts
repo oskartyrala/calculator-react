@@ -15,12 +15,24 @@ test("Creates a complex tree", () => {
         operator: "+",
     });
     expect(createExpressionTree("3-15*8-3+25/5")).toEqual({
-        a: "3",
-        b: {
-            a: { a: "15", b: "8", operator: "*" },
-            b: { a: "3", b: { a: "25", b: "5", operator: "/" }, operator: "+" },
+        a: {
+            a: {
+                a: "3",
+                b: {
+                    a: "15",
+                    b: "8",
+                    operator: "*",
+                },
+                operator: "-",
+            },
+            b: "3",
             operator: "-",
         },
-        operator: "-",
+        b: {
+            a: "25",
+            b: "5",
+            operator: "/",
+        },
+        operator: "+",
     });
 });
