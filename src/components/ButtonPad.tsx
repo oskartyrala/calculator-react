@@ -1,14 +1,18 @@
 import getButtonValue from "../utils/getButtonValue";
 import OneButton from "./OneButton";
 import isOperator from "../utils/isOperator";
-import evaluateExpression from "../utils/evaluateExpression";
+// import evaluateExpression from "../utils/evaluateExpression";
 import getOperatorSymbol from "../utils/getOperatorSymbol";
+import createExpressionTree from "../utils/createExpressionTree";
+import evaluateExpressionTree from "../utils/evaluateExpressionTree";
 
 interface ButtonPadProps {
     mainDisplay: string;
     secondaryDisplay: string[];
     setMainDisplay: React.Dispatch<React.SetStateAction<string>>;
     setSecondaryDisplay: React.Dispatch<React.SetStateAction<string[]>>;
+    writingMode: "replace" | "edit";
+    setWritingMode: React.Dispatch<React.SetStateAction<"replace" | "edit">>;
 }
 
 export function ButtonPad({
@@ -16,6 +20,8 @@ export function ButtonPad({
     secondaryDisplay,
     setMainDisplay,
     setSecondaryDisplay,
+    writingMode,
+    setWritingMode,
 }: ButtonPadProps): JSX.Element {
     const buttons = ["ampersand", "C", "plusminus"];
     const numberButtons = [
@@ -73,15 +79,46 @@ export function ButtonPad({
             ]);
         }
         setMainDisplay("0");
+        setWritingMode("replace");
     };
 
     const handleEvaluate = (): void => {
-        const result = evaluateExpression([
-            ...secondaryDisplay,
-            mainDisplay,
-        ]).toString();
+        const expressionTree = createExpressionTree(
+            [...secondaryDisplay, mainDisplay].join("")
+        );
+        // const result = evaluateExpression([
+        //     ...secondaryDisplay,
+        //     mainDisplay,
+        // ]).toString();
+        const result = evaluateExpressionTree(expressionTree).toString();
         setMainDisplay(result);
         setSecondaryDisplay([]);
+        setWritingMode("replace");
+    };
+
+    const handleNumbers = (button: string): void => {
+        setMainDisplay(
+            (prev) =>
+                (writingMode === "replace" ? "" : prev) + getButtonValue(button)
+        );
+
+        if (writingMode === "replace") {
+            setWritingMode("edit");
+        }
+    };
+
+    const handleClearEntry = () => {
+        setMainDisplay("0");
+        setWritingMode("replace");
+    };
+
+    const handleBackspace = () => {
+        setMainDisplay((prev) =>
+            prev.length > 1 ? prev.slice(0, prev.length - 1) : "0"
+        );
+        if (mainDisplay.length === 1) {
+            setWritingMode("replace");
+        }
     };
 
     return (
@@ -94,14 +131,10 @@ export function ButtonPad({
                 />
             ))}
 
-            <OneButton handleButton={() => setMainDisplay("0")} id={"CE"} />
+            <OneButton handleButton={() => handleClearEntry()} id={"CE"} />
 
             <OneButton
-                handleButton={() =>
-                    setMainDisplay((prev) =>
-                        prev.length > 1 ? prev.slice(0, prev.length - 1) : "0"
-                    )
-                }
+                handleButton={() => handleBackspace()}
                 id={"backspace"}
             />
 
@@ -126,11 +159,12 @@ export function ButtonPad({
             {numberButtons.map((button) => (
                 <OneButton
                     handleButton={() =>
-                        setMainDisplay(
-                            (prev) =>
-                                (prev === "0" ? "" : prev) +
-                                getButtonValue(button)
-                        )
+                        // setMainDisplay(
+                        //     (prev) =>
+                        //         (prev === "0" ? "" : prev) +
+                        //         getButtonValue(button)
+                        // )
+                        handleNumbers(button)
                     }
                     key={button}
                     id={button}

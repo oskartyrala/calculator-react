@@ -6,6 +6,9 @@ import { useState } from "react";
 function App() {
     const [mainDisplay, setMainDisplay] = useState("0");
     const [secondaryDisplay, setSecondaryDisplay] = useState<string[]>([]);
+    const [writingMode, setWritingMode] = useState<"replace" | "edit">(
+        "replace"
+    );
 
     return (
         <div className="calculator">
@@ -18,6 +21,8 @@ function App() {
                 secondaryDisplay={secondaryDisplay}
                 setMainDisplay={setMainDisplay}
                 setSecondaryDisplay={setSecondaryDisplay}
+                writingMode={writingMode}
+                setWritingMode={setWritingMode}
             />
         </div>
     );
