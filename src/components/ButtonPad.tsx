@@ -35,7 +35,6 @@ export function ButtonPad({
         "8",
         "9",
         "0",
-        "decimal",
     ];
     const operatorButtons = ["plus", "minus", "multiply", "divide"];
     const resultButtons = ["square", "root", "fraction", "equals"];
@@ -107,6 +106,20 @@ export function ButtonPad({
         }
     };
 
+    const handleDecimal = (): void => {
+
+        if(!mainDisplay.includes(".")) {
+            setMainDisplay(
+                (prev) =>
+                    `${(writingMode === "replace" ? "0" : prev)}.`
+            );
+        }
+
+        if (writingMode === "replace") {
+            setWritingMode("edit");
+        }
+    };
+
     const handleClearEntry = () => {
         setMainDisplay("0");
         setWritingMode("replace");
@@ -132,6 +145,8 @@ export function ButtonPad({
             ))}
 
             <OneButton handleButton={() => handleClearEntry()} id={"CE"} />
+
+            <OneButton handleButton={() => handleDecimal()} id={"decimal"} />
 
             <OneButton
                 handleButton={() => handleBackspace()}
