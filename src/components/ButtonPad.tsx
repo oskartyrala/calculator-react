@@ -23,7 +23,7 @@ export function ButtonPad({
     writingMode,
     setWritingMode,
 }: ButtonPadProps): JSX.Element {
-    const buttons = ["ampersand", "C", "plusminus"];
+    const buttons = ["ampersand", "plusminus"];
     const numberButtons = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
     const operatorButtons = ["plus", "minus", "multiply", "divide"];
     const resultButtons = ["square", "root", "fraction", "equals"];
@@ -112,6 +112,12 @@ export function ButtonPad({
         setWritingMode("replace");
     };
 
+    const handleClear = () => {
+        setMainDisplay("0");
+        setSecondaryDisplay([]);
+        setWritingMode("replace");
+    };
+
     const handleBackspace = () => {
         setMainDisplay((prev) =>
             prev.length > 1 ? prev.slice(0, prev.length - 1) : "0"
@@ -132,6 +138,8 @@ export function ButtonPad({
             ))}
 
             <OneButton handleButton={() => handleClearEntry()} id={"CE"} />
+
+            <OneButton handleButton={() => handleClear()} id={"C"} />
 
             <OneButton handleButton={() => handleDecimal()} id={"decimal"} />
 
