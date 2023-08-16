@@ -5,6 +5,9 @@ import isOperator from "../utils/isOperator";
 import getOperatorSymbol from "../utils/getOperatorSymbol";
 import createExpressionTree from "../utils/createExpressionTree";
 import evaluateExpressionTree from "../utils/evaluateExpressionTree";
+// import evaluateSimpleExpression from "../utils/evaluateSimpleExpression";
+import prepareRootSquareFraction from "../utils/prepareRootSquareFrancion";
+import cleanUpNum from "../utils/cleanUpNum";
 
 interface ButtonPadProps {
     mainDisplay: string;
@@ -26,7 +29,7 @@ export function ButtonPad({
     const buttons = ["ampersand", "plusminus"];
     const numberButtons = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
     const operatorButtons = ["plus", "minus", "multiply", "divide"];
-    const resultButtons = ["square", "root", "fraction", "equals"];
+    const resultButtons = ["square", "root", "fraction"];
 
     /*
         Scenario 1:
@@ -60,9 +63,10 @@ export function ButtonPad({
             );
             setSecondaryDisplay([...withoutLast, operatorSymbol]);
         } else {
+            const currentNum = cleanUpNum(mainDisplay);
             setSecondaryDisplay((prev) => [
                 ...prev,
-                mainDisplay,
+                currentNum,
                 operatorSymbol,
             ]);
         }
@@ -71,8 +75,9 @@ export function ButtonPad({
     };
 
     const handleEvaluate = (): void => {
+        const currentNum = cleanUpNum(mainDisplay);
         const expressionTree = createExpressionTree(
-            [...secondaryDisplay, mainDisplay].join("")
+            [...secondaryDisplay, currentNum].join("")
         );
         // const result = evaluateExpression([
         //     ...secondaryDisplay,
@@ -127,6 +132,19 @@ export function ButtonPad({
         }
     };
 
+    const handleInstantResult = (button: "root" | "square" | "fraction") => {
+        // const expressionStr = `${button}(${mainDisplay})`
+        // setMainDisplay(prev => evaluateSimpleExpression(prev, button).toString());
+        const expression = prepareRootSquareFraction(button, mainDisplay);
+        setMainDisplay(expression);
+        setWritingMode("replace");
+
+        // setSecondaryDisplay((prev) => [
+        //     ...prev,
+        //     expressionStr
+        // ]);
+    };
+
     return (
         <div className="btn-pad">
             {buttons.map((button) => (
@@ -143,6 +161,8 @@ export function ButtonPad({
 
             <OneButton handleButton={() => handleDecimal()} id={"decimal"} />
 
+            <OneButton handleButton={() => handleEvaluate()} id={"equals"} />
+
             <OneButton
                 handleButton={() => handleBackspace()}
                 id={"backspace"}
@@ -150,7 +170,11 @@ export function ButtonPad({
 
             {resultButtons.map((button) => (
                 <OneButton
-                    handleButton={() => handleEvaluate()}
+                    handleButton={() =>
+                        handleInstantResult(
+                            button as "root" | "square" | "fraction"
+                        )
+                    }
                     key={button}
                     id={button}
                 />

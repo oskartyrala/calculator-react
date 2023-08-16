@@ -11,5 +11,5 @@ export default function evaluateExpressionTree({
         typeof a === "string" ? a : evaluateExpressionTree(a).toString();
     const num2 =
         typeof b === "string" ? b : evaluateExpressionTree(b).toString();
-    return evaluateSimpleExpression(num1, num2, operator);
+    return evaluateSimpleExpression(num1, operator, num2);
 }
