@@ -60,7 +60,6 @@ test.skip("Evaluates complex trees with nested expressions", () => {
 });
 
 test("Works with a tree built with createExpressionTree", () => {
-    // const tree = createExpressionTree("3-15*8-3+25/5");
     const tree = createExpressionTree("3*12/3/3-15*8/2-3+25*8/5");
     expect(evaluateExpressionTree(tree)).toBe(-19);
 });
