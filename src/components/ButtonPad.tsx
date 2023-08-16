@@ -23,7 +23,7 @@ export function ButtonPad({
     writingMode,
     setWritingMode,
 }: ButtonPadProps): JSX.Element {
-    const buttons = ["ampersand", "C", "plusminus"];
+    const buttons = ["ampersand", "plusminus"];
     const numberButtons = [
         "1",
         "2",
@@ -38,7 +38,7 @@ export function ButtonPad({
         "decimal",
     ];
     const operatorButtons = ["plus", "minus", "multiply", "divide"];
-    const resultButtons = ["square", "root", "fraction", "equals"];
+    const resultButtons = ["square", "root", "fraction"];
 
     /*
         Scenario 1:
@@ -82,7 +82,7 @@ export function ButtonPad({
         setWritingMode("replace");
     };
 
-    const handleEvaluate = (): void => {
+    const handleEquals = (): void => {
         const expressionTree = createExpressionTree(
             [...secondaryDisplay, mainDisplay].join("")
         );
@@ -112,6 +112,12 @@ export function ButtonPad({
         setWritingMode("replace");
     };
 
+    const handleClear = () => {
+        setMainDisplay("0");
+        setSecondaryDisplay([]);
+        setWritingMode("replace");
+    };
+
     const handleBackspace = () => {
         setMainDisplay((prev) =>
             prev.length > 1 ? prev.slice(0, prev.length - 1) : "0"
@@ -132,6 +138,7 @@ export function ButtonPad({
             ))}
 
             <OneButton handleButton={() => handleClearEntry()} id={"CE"} />
+            <OneButton handleButton={() => handleClear()} id={"C"} />
 
             <OneButton
                 handleButton={() => handleBackspace()}
@@ -140,11 +147,13 @@ export function ButtonPad({
 
             {resultButtons.map((button) => (
                 <OneButton
-                    handleButton={() => handleEvaluate()}
+                    handleButton={() => handleEquals()}
                     key={button}
                     id={button}
                 />
             ))}
+
+            <OneButton handleButton={() => handleEquals()} id={"equals"} />
 
             {operatorButtons.map((button) => {
                 return (
