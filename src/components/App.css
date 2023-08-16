@@ -166,3 +166,8 @@ button {
     grid-column: 3;
     grid-row: 6;
 }
+
+#btn-decimal {
+    grid-column: 3;
+    grid-row: 6;
+}
