@@ -48,11 +48,11 @@ button:hover {
     margin: 0;
 }
 
-.mainDisplay {
+.currentNumber {
     font-size: 64px;
 }
 
-.secondaryDisplay {
+.fullExpression {
     font-size: 24px;
 }
 

@@ -4,8 +4,8 @@ import { ButtonPad } from "./ButtonPad";
 import { useState } from "react";
 
 function App() {
-    const [mainDisplay, setMainDisplay] = useState("0");
-    const [secondaryDisplay, setSecondaryDisplay] = useState<string[]>([]);
+    const [currentNumber, setCurrentNumber] = useState("0");
+    const [fullExpression, setFullExpression] = useState<string[]>([]);
     const [writingMode, setWritingMode] = useState<"replace" | "edit">(
         "replace"
     );
@@ -13,14 +13,14 @@ function App() {
     return (
         <div className="calculator">
             <Display
-                mainDisplay={mainDisplay}
-                secondaryDisplay={secondaryDisplay}
+                currentNumber={currentNumber}
+                fullExpression={fullExpression}
             />
             <ButtonPad
-                mainDisplay={mainDisplay}
-                secondaryDisplay={secondaryDisplay}
-                setMainDisplay={setMainDisplay}
-                setSecondaryDisplay={setSecondaryDisplay}
+                currentNumber={currentNumber}
+                fullExpression={fullExpression}
+                setCurrentNumber={setCurrentNumber}
+                setFullExpression={setFullExpression}
                 writingMode={writingMode}
                 setWritingMode={setWritingMode}
             />

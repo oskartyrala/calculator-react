@@ -1,15 +1,19 @@
-import evaluateSimpleExpression from "./evaluateSimpleExpression";
+import evaluateTwoNumbers from "./evaluateTwoNumbers";
 import { ExpressionTree } from "./createExpressionTree";
+import removeParentheses from "./removeParentheses";
 
 export default function evaluateExpressionTree({
     operator,
     a,
     b,
 }: ExpressionTree): number {
-    console.log(`Running with a: ${a}, b: ${b}, operator: ${operator}`);
     const num1 =
-        typeof a === "string" ? a : evaluateExpressionTree(a).toString();
+        typeof a === "string"
+            ? removeParentheses(a)
+            : evaluateExpressionTree(a).toString();
     const num2 =
-        typeof b === "string" ? b : evaluateExpressionTree(b).toString();
-    return evaluateSimpleExpression(num1, operator, num2);
+        typeof b === "string"
+            ? removeParentheses(b)
+            : evaluateExpressionTree(b).toString();
+    return evaluateTwoNumbers(num1, operator, num2);
 }
