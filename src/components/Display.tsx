@@ -1,16 +1,16 @@
 interface DisplayProps {
-    mainDisplay: string;
-    secondaryDisplay: string[];
+    currentNumber: string;
+    fullExpression: string[];
 }
 
 export function Display({
-    mainDisplay,
-    secondaryDisplay,
+    currentNumber,
+    fullExpression,
 }: DisplayProps): JSX.Element {
     return (
         <div className="display">
-            <p className="secondaryDisplay">{secondaryDisplay}</p>
-            <p className="mainDisplay">{mainDisplay}</p>
+            <p className="fullExpression">{fullExpression}</p>
+            <p className="currentNumber">{currentNumber}</p>
         </div>
     );
 }

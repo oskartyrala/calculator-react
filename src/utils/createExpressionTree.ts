@@ -15,16 +15,15 @@ export default function createExpressionTree(
     const tree = {} as ExpressionTree;
     let operatorIndex = -1;
 
-    if (expression.includes("+") || expression.includes("-")) {
+    const minusOperatorPattern = /(?<!\()-/;
+
+    if (expression.includes("+") || expression.match(minusOperatorPattern)) {
         operatorIndex = findLast(expression, ["+", "-"]);
-        // tree.operator = expression.split("").findLast(item => item === "+" || item === "-") as Operator;
     } else if (expression.includes("*") || expression.includes("/")) {
-        // tree.operator = expression.split("").findLast(item => item === "*" || item === "/") as Operator;
         operatorIndex = findLast(expression, ["*", "/"]);
     }
 
     tree.operator = expression[operatorIndex] as Operator;
-    console.log(`first operator: ${tree.operator}`);
 
     const firstOperand = expression.substring(0, operatorIndex);
     const secondOperand = expression.substring(operatorIndex + 1);
