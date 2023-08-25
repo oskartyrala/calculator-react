@@ -1,9 +1,9 @@
 export default function getButtonValue(key: string): string | JSX.Element {
     switch (key) {
-        case "ampersand":
-            return "&";
+        case "percent":
+            return "%";
 
-        case "plusminus":
+        case "negativetoggle":
             return "±";
 
         case "decimal":
