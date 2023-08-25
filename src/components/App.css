@@ -157,7 +157,7 @@ button {
     grid-row: 2;
 }
 
-#btn-negativetoggle {
+#btn-plusminus {
     grid-column: 1;
     grid-row: 6;
 }

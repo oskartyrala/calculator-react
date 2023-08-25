@@ -127,7 +127,7 @@ export function ButtonPad({
         <div className="btn-pad">
             <OneButton
                 handleButton={() => setCurrentNumber((prev) => prev)}
-                id={"percent"}
+                id={"ampersand"}
             />
 
             <OneButton handleButton={() => handleClearEntry()} id={"CE"} />
