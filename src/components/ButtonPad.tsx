@@ -4,8 +4,7 @@ import isOperator from "../utils/isOperator";
 import getOperatorSymbol from "../utils/getOperatorSymbol";
 import createExpressionTree from "../utils/createExpressionTree";
 import evaluateExpressionTree from "../utils/evaluateExpressionTree";
-// import prepareRootSquareFraction from "../utils/prepareRootSquareFrancion";
-import evaluateCurrent from "../utils/evaluateCurrent";
+import evaluateTwoNumbers from "../utils/evaluateTwoNumbers";
 
 interface ButtonPadProps {
     currentNumber: string;
@@ -51,7 +50,7 @@ export function ButtonPad({
     const handleSquareRootFraction = (
         button: "root" | "square" | "fraction"
     ) => {
-        const evaluated = evaluateCurrent(currentNumber, button);
+        const evaluated = evaluateTwoNumbers(currentNumber, button).toString();
         setCurrentNumber(evaluated);
         setWritingMode("replace");
     };
@@ -67,9 +66,11 @@ export function ButtonPad({
             setFullExpression([...expressionSoFar, operatorSymbol]);
         } else {
             const currentIsNegative = currentNumber.includes("-");
+            console.log(currentNumber);
             const numToPrint = currentIsNegative
-                ? `(${evaluateCurrent(currentNumber, operatorName)})`
-                : evaluateCurrent(currentNumber, operatorName);
+                ? `(${evaluateTwoNumbers(currentNumber, operatorName)})`
+                : evaluateTwoNumbers(currentNumber, operatorName).toString();
+                console.log(numToPrint);
             setFullExpression((prev) => [...prev, numToPrint, operatorSymbol]);
         }
         setCurrentNumber("0");
@@ -111,7 +112,7 @@ export function ButtonPad({
     };
 
     const handleEquals = (): void => {
-        const numToPrint = evaluateCurrent(currentNumber, "");
+        const numToPrint = evaluateTwoNumbers(currentNumber, "").toString();
         const expressionTree = createExpressionTree(
             [...fullExpression, numToPrint].join("")
         );
