@@ -1,6 +1,4 @@
-import evaluateFraction from "./evaluateFraction";
-import evaluateRoot from "./evaluateRoot";
-import evaluateSquare from "./evaluateSquare";
+import evaluateTwoNumbers from "./evaluateTwoNumbers";
 
 export default function evaluateCurrent(
     currentNumber: string,
@@ -8,13 +6,13 @@ export default function evaluateCurrent(
 ): string {
     switch (operation) {
         case "root":
-            return evaluateRoot(currentNumber);
+            return evaluateTwoNumbers(currentNumber, "root").toString();
 
         case "square":
-            return evaluateSquare(currentNumber);
+            return evaluateTwoNumbers(currentNumber, "square").toString();
 
         case "fraction":
-            return evaluateFraction(currentNumber);
+            return evaluateTwoNumbers(currentNumber, "fraction").toString();
     }
 
     return currentNumber;

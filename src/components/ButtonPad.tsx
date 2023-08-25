@@ -5,6 +5,7 @@ import getOperatorSymbol from "../utils/getOperatorSymbol";
 import createExpressionTree from "../utils/createExpressionTree";
 import evaluateExpressionTree from "../utils/evaluateExpressionTree";
 import evaluateTwoNumbers from "../utils/evaluateTwoNumbers";
+import evaluateCurrent from "../utils/evaluateCurrent";
 
 interface ButtonPadProps {
     currentNumber: string;
@@ -68,9 +69,9 @@ export function ButtonPad({
             const currentIsNegative = currentNumber.includes("-");
             console.log(currentNumber);
             const numToPrint = currentIsNegative
-                ? `(${evaluateTwoNumbers(currentNumber, operatorName)})`
-                : evaluateTwoNumbers(currentNumber, operatorName).toString();
-                console.log(numToPrint);
+                ? `(${evaluateCurrent(currentNumber, operatorName)})`
+                : evaluateCurrent(currentNumber, operatorName);
+            console.log(numToPrint);
             setFullExpression((prev) => [...prev, numToPrint, operatorSymbol]);
         }
         setCurrentNumber("0");
@@ -112,7 +113,7 @@ export function ButtonPad({
     };
 
     const handleEquals = (): void => {
-        const numToPrint = evaluateTwoNumbers(currentNumber, "").toString();
+        const numToPrint = evaluateCurrent(currentNumber, "");
         const expressionTree = createExpressionTree(
             [...fullExpression, numToPrint].join("")
         );
