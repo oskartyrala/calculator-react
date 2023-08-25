@@ -23,10 +23,10 @@ export default function evaluateTwoNumbers(
             return num1 * num1;
 
         case "root":
-            return Number(Math.sqrt(num1).toFixed(3));
+            return Math.sqrt(num1);
 
         case "fraction":
-            return Number((1 / num1).toFixed(3));
+            return 1 / num1;
 
         default:
             return 0;
