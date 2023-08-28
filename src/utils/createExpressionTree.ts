@@ -1,5 +1,6 @@
 import findLast from "./findLast";
-import isExpression from "./isExpression";
+import isOperator from "./isOperator";
+import removeParentheses from "./removeParentheses";
 
 export type Operator = "*" | "/" | "+" | "-";
 
@@ -26,12 +27,12 @@ export default function createExpressionTree(
 
     const firstOperand = processedExpression.slice(0, operatorIndex);
     const secondOperand = processedExpression.slice(operatorIndex + 1);
-    tree.a = isExpression(firstOperand)
+    tree.a = firstOperand.some(isOperator) // if it's still an expression
         ? createExpressionTree(firstOperand)
-        : firstOperand[0];
-    tree.b = isExpression(secondOperand)
+        : removeParentheses(firstOperand[0]);
+    tree.b = secondOperand.some(isOperator) // if it's still an expressionn
         ? createExpressionTree(secondOperand)
-        : secondOperand[0];
+        : removeParentheses(secondOperand[0]);
 
     return tree;
 }
