@@ -28,6 +28,21 @@ export function ButtonPad({
     const operators = ["plus", "minus", "multiply", "divide"];
     const squareRootFraction = ["square", "root", "fraction"];
 
+    const handlePercent = () => {
+        const fullExpressionTree = createExpressionTree(
+            fullExpression.slice(0, fullExpression.length - 1)
+        );
+        const fullExpressionResult =
+            fullExpression.length > 2
+                ? evaluateExpressionTree(fullExpressionTree)
+                : Number(fullExpression[0]);
+        const percentageResult = (
+            (fullExpressionResult * Number(currentNumber)) /
+            100
+        ).toString();
+        setCurrentNumber(percentageResult);
+    };
+
     const handleClearEntry = () => {
         setCurrentNumber("0");
         setWritingMode("replace");
@@ -67,7 +82,7 @@ export function ButtonPad({
             setFullExpression([...expressionSoFar, operatorSymbol]);
         } else {
             const currentIsNegative = currentNumber.includes("-");
-            console.log(currentNumber);
+            console.log(currentIsNegative);
             const numToPrint = currentIsNegative
                 ? `(${evaluateCurrent(currentNumber, operatorName)})`
                 : evaluateCurrent(currentNumber, operatorName);
@@ -114,11 +129,17 @@ export function ButtonPad({
 
     const handleEquals = (): void => {
         const numToPrint = evaluateCurrent(currentNumber, "");
-        const expressionTree = createExpressionTree(
-            [...fullExpression, numToPrint].join("")
-        );
+        console.log(numToPrint);
+        console.log([...fullExpression, numToPrint]);
+        const expressionTree = createExpressionTree([
+            ...fullExpression,
+            numToPrint,
+        ]);
+
+        console.log(expressionTree);
 
         const result = evaluateExpressionTree(expressionTree).toString();
+        console.log(result);
         setCurrentNumber(result);
         setFullExpression([]);
         setWritingMode("replace");
@@ -126,10 +147,7 @@ export function ButtonPad({
 
     return (
         <div className="btn-pad">
-            <OneButton
-                handleButton={() => setCurrentNumber((prev) => prev)}
-                id={"percent"}
-            />
+            <OneButton handleButton={handlePercent} id={"percent"} />
 
             <OneButton handleButton={() => handleClearEntry()} id={"CE"} />
 

@@ -10,29 +10,38 @@ export interface ExpressionTree {
 }
 
 export default function createExpressionTree(
-    expression: string
+    expression: string[]
 ): ExpressionTree {
+    const negativeNumbersWithoutParentheses = /^-\d+(\.\d+)?$/;
+    const expressionWithParentheses = expression.map((item) =>
+        item.match(negativeNumbersWithoutParentheses) ? `(${item})` : item
+    );
+
     const tree = {} as ExpressionTree;
     let operatorIndex = -1;
 
-    const minusOperatorPattern = /(?<!\()-/;
-
-    if (expression.includes("+") || expression.match(minusOperatorPattern)) {
-        operatorIndex = findLast(expression, ["+", "-"]);
-    } else if (expression.includes("*") || expression.includes("/")) {
-        operatorIndex = findLast(expression, ["*", "/"]);
+    if (
+        expressionWithParentheses.includes("+") ||
+        expressionWithParentheses.includes("-")
+    ) {
+        operatorIndex = findLast(expressionWithParentheses, ["+", "-"]);
+    } else if (
+        expressionWithParentheses.includes("*") ||
+        expressionWithParentheses.includes("/")
+    ) {
+        operatorIndex = findLast(expressionWithParentheses, ["*", "/"]);
     }
 
-    tree.operator = expression[operatorIndex] as Operator;
+    tree.operator = expressionWithParentheses[operatorIndex] as Operator;
 
-    const firstOperand = expression.substring(0, operatorIndex);
-    const secondOperand = expression.substring(operatorIndex + 1);
+    const firstOperand = expressionWithParentheses.slice(0, operatorIndex);
+    const secondOperand = expressionWithParentheses.slice(operatorIndex + 1);
     tree.a = isExpression(firstOperand)
         ? createExpressionTree(firstOperand)
-        : firstOperand;
+        : firstOperand[0];
     tree.b = isExpression(secondOperand)
         ? createExpressionTree(secondOperand)
-        : secondOperand;
+        : secondOperand[0];
 
     return tree;
 }
