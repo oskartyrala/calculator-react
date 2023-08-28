@@ -1,9 +1,9 @@
 import OneButton from "./OneButton";
 import isOperator from "../utils/isOperator";
-import getOperatorSymbol from "../utils/getOperatorSymbol";
-import createExpressionTree from "../utils/createExpressionTree";
+import createExpressionTree, { Operator } from "../utils/createExpressionTree";
 import evaluateExpressionTree from "../utils/evaluateExpressionTree";
 import evaluateSimpleExpression from "../utils/evaluateSimpleExpression";
+import getButtonValue from "../utils/getButtonValue";
 
 interface ButtonPadProps {
     currentNumber: string;
@@ -73,7 +73,7 @@ export function ButtonPad({
     };
 
     const handleOperators = (operatorName: string): void => {
-        const operatorSymbol = getOperatorSymbol(operatorName);
+        const operatorSymbol = getButtonValue(operatorName) as Operator;
         const lastChar = fullExpression[fullExpression.length - 1];
 
         if (isOperator(lastChar) && currentNumber === "0") {
