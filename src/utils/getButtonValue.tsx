@@ -28,7 +28,7 @@ export default function getButtonValue(key: string): string | JSX.Element {
             return "=";
 
         case "backspace":
-            return "<";
+            return "⌫";
 
         case "fraction":
             return (
