@@ -1,4 +1,4 @@
-import evaluateTwoNumbers from "./evaluateTwoNumbers";
+import evaluateSimpleExpression from "./evaluateSimpleExpression";
 import { ExpressionTree } from "./createExpressionTree";
 import removeParentheses from "./removeParentheses";
 
@@ -15,5 +15,5 @@ export default function evaluateExpressionTree({
         typeof b === "string"
             ? removeParentheses(b)
             : evaluateExpressionTree(b).toString();
-    return evaluateTwoNumbers(num1, operator, num2);
+    return evaluateSimpleExpression(num1, operator, num2);
 }
