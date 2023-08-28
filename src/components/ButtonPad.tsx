@@ -1,5 +1,4 @@
 import OneButton from "./OneButton";
-import isOperator from "../utils/isOperator";
 import createExpressionTree, { Operator } from "../utils/createExpressionTree";
 import evaluateExpressionTree from "../utils/evaluateExpressionTree";
 import evaluateSimpleExpression from "../utils/evaluateSimpleExpression";
@@ -74,19 +73,10 @@ export function ButtonPad({
 
     const handleOperators = (operatorName: string): void => {
         const operatorSymbol = getButtonValue(operatorName) as Operator;
-        const lastChar = fullExpression[fullExpression.length - 1];
 
-        if (isOperator(lastChar) && currentNumber === "0") {
-            const expressionSoFar = fullExpression.slice(
-                0,
-                fullExpression.length - 1
-            );
-            setFullExpression([...expressionSoFar, operatorSymbol]);
-        } else {
-            const numToPrint =
-                currentNumber[0] === "-" ? `(${currentNumber})` : currentNumber;
-            setFullExpression((prev) => [...prev, numToPrint, operatorSymbol]);
-        }
+        const numToPrint =
+            currentNumber[0] === "-" ? `(${currentNumber})` : currentNumber;
+        setFullExpression((prev) => [...prev, numToPrint, operatorSymbol]);
 
         setCurrentNumber("0");
         setWritingMode("replace");
