@@ -1,4 +1,4 @@
-export default function evaluateTwoNumbers(
+export default function evaluateSimpleExpression(
     firstOperand: string,
     operator: string,
     secondOperand?: string

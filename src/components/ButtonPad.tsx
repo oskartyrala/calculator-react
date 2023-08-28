@@ -1,11 +1,8 @@
-import getButtonValue from "../utils/getButtonValue";
 import OneButton from "./OneButton";
-import isOperator from "../utils/isOperator";
-import getOperatorSymbol from "../utils/getOperatorSymbol";
-import createExpressionTree from "../utils/createExpressionTree";
+import createExpressionTree, { Operator } from "../utils/createExpressionTree";
 import evaluateExpressionTree from "../utils/evaluateExpressionTree";
-import evaluateTwoNumbers from "../utils/evaluateTwoNumbers";
-import evaluateCurrent from "../utils/evaluateCurrent";
+import evaluateSimpleExpression from "../utils/evaluateSimpleExpression";
+import getButtonValue from "../utils/getButtonValue";
 
 interface ButtonPadProps {
     currentNumber: string;
@@ -48,7 +45,7 @@ export function ButtonPad({
         setWritingMode("replace");
     };
 
-    const handleClear = () => {
+    const handleClearAll = () => {
         setCurrentNumber("0");
         setFullExpression([]);
         setWritingMode("replace");
@@ -66,40 +63,33 @@ export function ButtonPad({
     const handleSquareRootFraction = (
         button: "root" | "square" | "fraction"
     ) => {
-        const evaluated = evaluateTwoNumbers(currentNumber, button).toString();
-        setCurrentNumber(evaluated);
+        const result = evaluateSimpleExpression(
+            currentNumber,
+            button
+        ).toString();
+        setCurrentNumber(result);
         setWritingMode("replace");
     };
 
     const handleOperators = (operatorName: string): void => {
-        const operatorSymbol = getOperatorSymbol(operatorName);
-        const lastChar = fullExpression[fullExpression.length - 1];
-        if (isOperator(lastChar) && currentNumber === "0") {
-            const expressionSoFar = fullExpression.slice(
-                0,
-                fullExpression.length - 1
-            );
-            setFullExpression([...expressionSoFar, operatorSymbol]);
-        } else {
-            const currentIsNegative = currentNumber.includes("-");
-            console.log(currentIsNegative);
-            const numToPrint = currentIsNegative
-                ? `(${evaluateCurrent(currentNumber, operatorName)})`
-                : evaluateCurrent(currentNumber, operatorName);
-            console.log(numToPrint);
-            setFullExpression((prev) => [...prev, numToPrint, operatorSymbol]);
-        }
+        const operatorSymbol = getButtonValue(operatorName) as Operator;
+
+        const numToPrint =
+            currentNumber[0] === "-" ? `(${currentNumber})` : currentNumber;
+        setFullExpression((prev) => [...prev, numToPrint, operatorSymbol]);
+
         setCurrentNumber("0");
         setWritingMode("replace");
     };
-    const handleNumbers = (button: string): void => {
+
+    const handleNumbers = (number: string): void => {
         setCurrentNumber(
             (prev) =>
                 (writingMode === "replace"
-                    ? prev.includes("-")
+                    ? prev[0] === "-"
                         ? "-"
                         : ""
-                    : prev) + getButtonValue(button)
+                    : prev) + number // keeps the minus if it's there
         );
 
         if (writingMode === "replace") {
@@ -108,7 +98,7 @@ export function ButtonPad({
     };
 
     const handleNegativeToggle = () => {
-        if (currentNumber.includes("-")) {
+        if (currentNumber[0] === "-") {
             setCurrentNumber((prev) => prev.slice(1));
         } else {
             setCurrentNumber((prev) => `-${prev}`);
@@ -128,18 +118,13 @@ export function ButtonPad({
     };
 
     const handleEquals = (): void => {
-        const numToPrint = evaluateCurrent(currentNumber, "");
-        console.log(numToPrint);
-        console.log([...fullExpression, numToPrint]);
         const expressionTree = createExpressionTree([
             ...fullExpression,
-            numToPrint,
+            currentNumber,
         ]);
 
-        console.log(expressionTree);
-
         const result = evaluateExpressionTree(expressionTree).toString();
-        console.log(result);
+
         setCurrentNumber(result);
         setFullExpression([]);
         setWritingMode("replace");
@@ -151,7 +136,7 @@ export function ButtonPad({
 
             <OneButton handleButton={() => handleClearEntry()} id={"CE"} />
 
-            <OneButton handleButton={() => handleClear()} id={"C"} />
+            <OneButton handleButton={() => handleClearAll()} id={"C"} />
 
             <OneButton
                 handleButton={() => handleBackspace()}
