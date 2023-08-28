@@ -1,9 +1,9 @@
-export default function isExpression(str: string): boolean {
+export default function isExpression(arr: string[]): boolean {
     const minusOperatorPattern = /(?<!\()-/;
     const result =
-        str.includes("*") ||
-        str.includes("/") ||
-        str.includes("+") ||
-        Boolean(str.match(minusOperatorPattern));
+        arr.includes("*") ||
+        arr.includes("/") ||
+        arr.includes("+") ||
+        arr.findIndex((value) => minusOperatorPattern.test(value)) !== -1;
     return result;
 }

@@ -1,7 +1,7 @@
 import evaluateExpressionTree from "./evaluateExpressionTree";
 import createExpressionTree, { ExpressionTree } from "./createExpressionTree";
 
-test.skip("evaluate simple trees", () => {
+test("evaluate simple trees", () => {
     const simpleAddition: ExpressionTree = {
         operator: "+",
         a: "1",
@@ -31,7 +31,7 @@ test.skip("evaluate simple trees", () => {
     expect(evaluateExpressionTree(simpleDivision)).toBe(5);
 });
 
-test.skip("Evaluates complex trees with nested expressions", () => {
+test("Evaluates complex trees with nested expressions", () => {
     const leftTree: ExpressionTree = {
         operator: "+",
         a: "1",
@@ -60,6 +60,54 @@ test.skip("Evaluates complex trees with nested expressions", () => {
 });
 
 test("Works with a tree built with createExpressionTree", () => {
-    const tree = createExpressionTree("3*12/3/3-15*8/2-3+25*8/5");
+    const tree = createExpressionTree([
+        "3",
+        "*",
+        "12",
+        "/",
+        "3",
+        "/",
+        "3",
+        "-",
+        "15",
+        "*",
+        "8",
+        "/",
+        "2",
+        "-",
+        "3",
+        "+",
+        "25",
+        "*",
+        "8",
+        "/",
+        "5",
+    ]);
     expect(evaluateExpressionTree(tree)).toBe(-19);
+    const secondTree = createExpressionTree([
+        "3",
+        "*",
+        "-12",
+        "/",
+        "3",
+        "/",
+        "3",
+        "-",
+        "15",
+        "*",
+        "8",
+        "/",
+        "-2",
+        "-",
+        "3",
+        "+",
+        "25",
+        "*",
+        "8",
+        "/",
+        "5",
+    ]);
+    expect(evaluateExpressionTree(secondTree)).toBe(93);
+    const thirdTree = createExpressionTree(["5", "+", "2.5", "*", "-5.4"]);
+    expect(evaluateExpressionTree(thirdTree)).toBe(-8.5);
 });
