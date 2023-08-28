@@ -26,18 +26,18 @@ export function ButtonPad({
     const squareRootFraction = ["square", "root", "fraction"];
 
     const handlePercent = () => {
-        const fullExpressionTree = createExpressionTree(
+        const treeSoFar = createExpressionTree(
             fullExpression.slice(0, fullExpression.length - 1)
         );
-        const fullExpressionResult =
+        const resultSoFar =
             fullExpression.length > 2
-                ? evaluateExpressionTree(fullExpressionTree)
+                ? evaluateExpressionTree(treeSoFar)
                 : Number(fullExpression[0]);
-        const percentageResult = (
-            (fullExpressionResult * Number(currentNumber)) /
+        const percentageOfResult = (
+            (resultSoFar * Number(currentNumber)) /
             100
         ).toString();
-        setCurrentNumber(percentageResult);
+        setCurrentNumber(percentageOfResult);
     };
 
     const handleClearEntry = () => {
