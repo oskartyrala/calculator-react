@@ -1,11 +1,6 @@
 export default function removeParentheses(str: string): string {
-    const negativePattern = /\((.*?)\)/; // This regex pattern captures text between root
-    const negativeMatch = str.match(negativePattern);
+    const parenthesesPattern = /\((.*?)\)/; // This regex pattern captures text between parentheses
+    const parenthesesMatch = str.match(parenthesesPattern);
 
-    if (negativeMatch) {
-        const num = Number(negativeMatch[1]);
-        return num.toString();
-    }
-
-    return str;
+    return parenthesesMatch ? parenthesesMatch[1] : str;
 }
