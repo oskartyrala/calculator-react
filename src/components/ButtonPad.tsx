@@ -53,10 +53,18 @@ export function ButtonPad({
     };
 
     const handleBackspace = () => {
+        const currentIsNegative = currentNumber[0] === "-";
         setCurrentNumber((prev) =>
-            prev.length > 1 ? prev.slice(0, prev.length - 1) : "0"
+            prev.length === 1 ||
+            (prev.length === 2 && currentIsNegative) ||
+            prev === "Infinity" // Pressing backspace resets to 0 if you're at 1 character of length or it's Infinity
+                ? "0"
+                : prev.slice(0, prev.length - 1)
         );
-        if (currentNumber.length === 1) {
+        if (
+            currentNumber.length === 1 ||
+            (currentNumber.length === 2 && currentIsNegative)
+        ) {
             setWritingMode("replace");
         }
     };
@@ -84,6 +92,7 @@ export function ButtonPad({
     };
 
     const handleNumbers = (number: string): void => {
+        console.log(writingMode);
         setCurrentNumber(
             (prev) =>
                 (writingMode === "replace"
