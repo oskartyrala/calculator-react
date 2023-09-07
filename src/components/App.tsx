@@ -6,9 +6,6 @@ import { useState } from "react";
 function App() {
     const [currentNumber, setCurrentNumber] = useState("0");
     const [fullExpression, setFullExpression] = useState<string[]>([]);
-    const [writingMode, setWritingMode] = useState<"replace" | "edit">(
-        "replace"
-    );
 
     return (
         <div className="calculator">
@@ -21,8 +18,6 @@ function App() {
                 fullExpression={fullExpression}
                 setCurrentNumber={setCurrentNumber}
                 setFullExpression={setFullExpression}
-                writingMode={writingMode}
-                setWritingMode={setWritingMode}
             />
         </div>
     );
