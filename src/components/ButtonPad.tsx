@@ -3,14 +3,13 @@ import createExpressionTree, { Operator } from "../utils/createExpressionTree";
 import evaluateExpressionTree from "../utils/evaluateExpressionTree";
 import evaluateSimpleExpression from "../utils/evaluateSimpleExpression";
 import getButtonValue from "../utils/getButtonValue";
+import { useState } from "react";
 
 interface ButtonPadProps {
     currentNumber: string;
     fullExpression: string[];
     setCurrentNumber: React.Dispatch<React.SetStateAction<string>>;
     setFullExpression: React.Dispatch<React.SetStateAction<string[]>>;
-    writingMode: "replace" | "edit";
-    setWritingMode: React.Dispatch<React.SetStateAction<"replace" | "edit">>;
 }
 
 export function ButtonPad({
@@ -18,9 +17,11 @@ export function ButtonPad({
     fullExpression,
     setCurrentNumber,
     setFullExpression,
-    writingMode,
-    setWritingMode,
 }: ButtonPadProps): JSX.Element {
+    const [writingMode, setWritingMode] = useState<"replace" | "edit">(
+        "replace"
+    );
+
     const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
     const operators = ["plus", "minus", "multiply", "divide"];
     const squareRootFraction = ["square", "root", "fraction"];
