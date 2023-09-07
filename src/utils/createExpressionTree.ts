@@ -1,13 +1,34 @@
-import findLast from "./findLast";
-import isOperator from "./isOperator";
-import removeParentheses from "./removeParentheses";
-
 export type Operator = "*" | "/" | "+" | "-";
 
 export interface ExpressionTree {
     operator: Operator;
     a: string | ExpressionTree;
     b: string | ExpressionTree;
+}
+
+function removeParentheses(str: string): string {
+    const parenthesesPattern = /\((.*?)\)/; // This regex pattern captures text between parentheses
+    const parenthesesMatch = str.match(parenthesesPattern);
+
+    return parenthesesMatch ? parenthesesMatch[1] : str;
+}
+
+function findLast(arr: string[], operators: Operator[]): number | undefined {
+    for (let i = arr.length - 1; i >= 0; i--) {
+        if (operators.includes(arr[i] as Operator)) {
+            return i;
+        }
+    }
+    return;
+}
+
+function isExpression(operand: string[]): boolean {
+    return operand.some(isOperator);
+}
+
+function isOperator(str: string): boolean {
+    const operators = ["+", "-", "*", "/"];
+    return operators.includes(str);
 }
 
 export default function createExpressionTree(
@@ -27,10 +48,10 @@ export default function createExpressionTree(
 
     const firstOperand = processedExpression.slice(0, operatorIndex);
     const secondOperand = processedExpression.slice(operatorIndex + 1);
-    tree.a = firstOperand.some(isOperator) // if it's still an expression
+    tree.a = isExpression(firstOperand)
         ? createExpressionTree(firstOperand)
         : removeParentheses(firstOperand[0]);
-    tree.b = secondOperand.some(isOperator) // if it's still an expressionn
+    tree.b = isExpression(secondOperand)
         ? createExpressionTree(secondOperand)
         : removeParentheses(secondOperand[0]);
 
